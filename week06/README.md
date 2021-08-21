@@ -1,6 +1,20 @@
 # Week06
 
-#### 文件描述符
+## 使用
+
+```shell
+> cd child_process_IPC_restart_automatice
+
+> node master.js
+```
+
+```shell
+> curl http://127.0.0.1:9000
+```
+
+## 概念
+
+### 文件描述符
 
 https://zh.wikipedia.org/wiki/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6
 

@@ -1,15 +1,15 @@
 const { createServer } = require("http");
 const { log } = require("./../logger");
 
-log("worker 进程启动");
+log("worker 启动：" + process.pid);
 
 const server = createServer((req, res) => {
   res.writeHead(200, { "Content-Type": "text-plain" });
   res.end(
-    "worker 进程, pid: " + process.pid + ", ppid: " + process.ppid + "\n"
+    "worker 处理内容, pid: " + process.pid + ", ppid: " + process.ppid + "\n"
   );
 
-  log("worker 进程处理内容");
+  log("worker 处理内容：" + process.pid);
 
   // 模拟错误
   throw new Error("exception");
@@ -26,7 +26,7 @@ process.on("message", (m, tcp) => {
 });
 
 process.on("uncaughtException", () => {
-  log("worker 进程捕获错误，发送自杀信号");
+  log("worker 捕获错误，发送自杀信号：" + process.pid);
 
   process.send({ action: "suicide" });
 

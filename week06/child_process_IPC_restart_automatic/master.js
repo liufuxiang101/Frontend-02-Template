@@ -5,7 +5,7 @@ const cpus = require("os").cpus();
 
 const server = createServer().listen(9000);
 
-log("master 启动");
+log("master 启动：" + process.pid);
 
 const worker = {};
 const createWorker = () => {
@@ -20,9 +20,8 @@ const createWorker = () => {
 
   // 退出时重新启动新的进程
   worker.on("exit", () => {
-    console.log(">>>>>");
-    console.log("退出进程，pid: " + worker.pid);
-    log("worker 进程退出");
+    console.log("worker 退出：" + worker.pid);
+    log("worker 退出：" + worker.pid);
 
     delete worker[worker.pid];
   });
@@ -31,18 +30,17 @@ const createWorker = () => {
   worker.send("server", server);
   worker[worker.pid] = worker;
 
-  console.log(">>>>>");
-  console.log("新建进程，pid: " + worker.pid);
-  log("master 新建进程 worker");
+  console.log("master 新建 worker：" + worker.pid);
+  log("master 新建 worker：" + worker.pid);
 };
 
-for (let i = 0; i < cpus.length; i++) {
+for (let i = 0; i < 2; i++) {
   createWorker();
 }
 
 // 进程退出时，所有工作进程退出
 process.on("exit", () => {
-  log("master 进程退出");
+  log("master 退出：" + process.pid);
   for (const pid in worker) {
     worker[pid].kill();
   }
